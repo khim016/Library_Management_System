@@ -5,11 +5,12 @@ OOP Final Project - C# Windows Forms (SharpDevelop 4.x / .NET Framework 4.0, C# 
 ## Group Members
 | Member | Responsibilities |
 |---|---|
-| Member 1 | LibraryItem, Book, Magazine, Thesis, IBorrowable, frmItems, frmMain |
-| Member 2 | Person, Student, Faculty, frmBorrowers, frmTransactions, Documentation + Class Diagram |
-| Member 3 | BorrowTransaction, Library, DataStore, frmBorrow, frmReturn, Canva slides |
+|Khim Lester S. Maldia | LibraryItem, Book, DataStore, Magazine, Thesis, IBorrowable, frmItems, frmMain |
+| Jhandy Paguinto | Person, Student, Faculty, frmBorrowers, frmTransactions, Class Diagram |
+| Jared Ricarte | BorrowTransaction, Library, frmBorrow, frmReturn, Canva slides |
+| Chris Julian Ornedo | BorrowTransaction, frmBorrow, frmReturn, Canva slides, Documentation |
 
-*(Replace with your real names.)*
+
 
 ## How to Run
 1. Open `LibrarySystem.sln` in SharpDevelop (or Visual Studio).
