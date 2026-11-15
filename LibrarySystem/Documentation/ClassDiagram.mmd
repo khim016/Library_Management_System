@@ -1,0 +1,140 @@
+classDiagram
+    class IBorrowable {
+        <<interface>>
+        +IsAvailable bool
+        +MarkBorrowed() void
+        +MarkReturned() void
+    }
+
+    class LibraryItem {
+        <<abstract>>
+        -itemId string
+        -title string
+        -author string
+        -isAvailable bool
+        #LibraryItem(id, title, author)
+        +ItemId string
+        +Title string
+        +Author string
+        +IsAvailable bool
+        +Status string
+        +ItemType string*
+        +LoanDays int*
+        +CalculateFine(daysLate int) decimal*
+        +MarkBorrowed() void
+        +MarkReturned() void
+        +GetDetails() string
+        +ToString() string
+    }
+    class Book {
+        +Book(id, title, author)
+        +ItemType string
+        +LoanDays int
+        +CalculateFine(daysLate int) decimal
+    }
+    class Magazine {
+        +Magazine(id, title, author)
+        +ItemType string
+        +LoanDays int
+        +CalculateFine(daysLate int) decimal
+    }
+    class Thesis {
+        +Thesis(id, title, author)
+        +ItemType string
+        +LoanDays int
+        +CalculateFine(daysLate int) decimal
+        +GetDetails() string
+    }
+
+    class Person {
+        <<abstract>>
+        -personId string
+        -name string
+        -contact string
+        #Person(id, name, contact)
+        +PersonId string
+        +Name string
+        +Contact string
+        +BorrowerType string*
+        +MaxItems int*
+        +GetDiscountedFine(fine decimal) decimal
+        +GetInfo() string
+        +ToString() string
+    }
+    class Student {
+        +Student(id, name, contact)
+        +BorrowerType string
+        +MaxItems int
+    }
+    class Faculty {
+        +Faculty(id, name, contact)
+        +BorrowerType string
+        +MaxItems int
+        +GetDiscountedFine(fine decimal) decimal
+    }
+
+    class BorrowTransaction {
+        -transactionId string
+        -borrower Person
+        -item LibraryItem
+        -borrowDate DateTime
+        -dueDate DateTime
+        -returnDate DateTime?
+        -fine decimal
+        -isReturned bool
+        +BorrowTransaction(id, borrower, item, borrowDate)
+        +TransactionId string
+        +Borrower Person
+        +Item LibraryItem
+        +BorrowerName string
+        +ItemTitle string
+        +ItemType string
+        +BorrowDate DateTime
+        +DueDate DateTime
+        +ReturnDate DateTime?
+        +Fine decimal
+        +IsReturned bool
+        +Status string
+        +PreviewFine(date DateTime) decimal
+        +Return(date DateTime) void
+    }
+
+    class Library {
+        -items List~LibraryItem~
+        -borrowers List~Person~
+        -transactions List~BorrowTransaction~
+        +Items ReadOnlyCollection~LibraryItem~
+        +Borrowers ReadOnlyCollection~Person~
+        +Transactions ReadOnlyCollection~BorrowTransaction~
+        +AddItem(item) void
+        +RemoveItem(id) void
+        +FindItem(id) LibraryItem
+        +GetAvailableItems() List~LibraryItem~
+        +SearchItems(keyword) List~LibraryItem~
+        +AddBorrower(p) void
+        +RemoveBorrower(id) void
+        +FindBorrower(id) Person
+        +SearchBorrowers(keyword) List~Person~
+        +CountActiveLoans(p) int
+        +BorrowItem(p, item, date) BorrowTransaction
+        +ReturnItem(t, date) decimal
+        +GetActiveTransactions() List~BorrowTransaction~
+    }
+
+    class DataStore {
+        <<static>>
+        +Lib Library$
+    }
+
+    IBorrowable <|.. LibraryItem
+    LibraryItem <|-- Book
+    LibraryItem <|-- Magazine
+    LibraryItem <|-- Thesis
+    Person <|-- Student
+    Person <|-- Faculty
+    BorrowTransaction o-- Person
+    BorrowTransaction o-- LibraryItem
+    Library "1" *-- "many" LibraryItem
+    Library "1" *-- "many" Person
+    Library "1" *-- "many" BorrowTransaction
+    DataStore --> Library : holds shared instance
